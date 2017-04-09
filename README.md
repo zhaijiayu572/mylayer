@@ -8,7 +8,7 @@
 height|高度|150
 width|宽度|300
 title|标题|"提示"
-content|内容|"空"
+content|内容|""
 
 
 
