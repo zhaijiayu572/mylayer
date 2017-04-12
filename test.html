@@ -14,13 +14,14 @@
 <script src="demo.js"></script>
 <script>
     $('.test-btn').on('click',function () {
-//        layer.otherAlert({
-//            content:"hello"
-//        });
-        layer.open({
-            title:'hello',
-            content:'world'
-        })
+        var alert = layer.otherAlert({
+            content:"hello"
+        });
+
+//        layer.open({
+//            title:'hello',
+//            content:'world'
+//        })
     });
 
 </script>

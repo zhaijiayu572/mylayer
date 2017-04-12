@@ -1,4 +1,8 @@
 function Layer() {
+    this.close = function (index) {  //用于关闭指定弹窗
+          index.remove();
+          $('.layer-msk').remove();      //将遮罩也一同移除
+    };
     this.otherAlert = function(config){
         var option = {
             title:'提示',
@@ -13,16 +17,22 @@ function Layer() {
         $myContent = $('<p class="layer-alert-content">'+option.content+'</p>');
         $confirmBtn = $('<button class="confirm-btn">确定</button>');
         $confirmBtn.on('click',function () {
-            $myAlert.remove();
-        });
+            this.close($myAlert);
+        }.bind(this));
         $closeBtn.on('click',function () {
-           $myAlert.remove();
-        });
+           this.close($myAlert);
+        }.bind(this));
+        $mask = $('<div class="layer-msk"></div>').css({width:$('body').width(),height:$('body').height()})
+            .on('click',function () {
+                this.close($myAlert);
+            }.bind(this));
+        $mask.appendTo($('body'));
         $closeBtn.appendTo($myTitle);
         $confirmBtn.appendTo($myAlert);
         $myTitle.appendTo($myAlert);
         $myContent.appendTo($myAlert);
         $myAlert.css({height:option.height,width:option.width}).appendTo($('body'));
+        return $myAlert;
     };
     this.open = function (config) {
           var option = {
@@ -32,7 +42,7 @@ function Layer() {
               width:300        //在未传入一个对象时默认宽度
           };
           $.extend(option,config);
-          var $openContainer = $("<div class='layer-open-container'></div>");
+          var $openContainer = $("<div class='layer-open'></div>");
           var $closeBtn = $('<span class="layer-open close-btn">X</span>');
           var $top = $('<div class="layer-open-top"></div>');
           if(!option.title){
@@ -43,6 +53,7 @@ function Layer() {
           var $body = $('<div class="layer-open-body"></div>');
           if(typeof(option.content)==='object'){
               option.content.appendTo($body);
+              $openContainer.css({width:option.content.width()});
           }else{
               var $content = $('<p class="open-content">'+option.content+'</p>');
               $content.appendTo($body);
@@ -51,6 +62,7 @@ function Layer() {
           $top.appendTo($openContainer);
           $body.appendTo($openContainer);
           $openContainer.appendTo($('body'));
+          return $openContainer;
     }
 }
 window.layer = new Layer();
