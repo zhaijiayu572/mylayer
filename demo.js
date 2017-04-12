@@ -28,8 +28,10 @@ function Layer() {
           var option = {
               title:'提示', //如需关闭则传入false
               content:null,  //请传入你需要包裹在弹窗里面的jQ对象或者一个字符串
+              height:150,     //在未传入一个对象时默认高度
+              width:300        //在未传入一个对象时默认宽度
           };
-          $.extend(opotion,config);
+          $.extend(option,config);
           var $openContainer = $("<div class='layer-open-container'></div>");
           var $closeBtn = $('<span class="layer-open close-btn">X</span>');
           var $top = $('<div class="layer-open-top"></div>');
@@ -44,8 +46,11 @@ function Layer() {
           }else{
               var $content = $('<p class="open-content">'+option.content+'</p>');
               $content.appendTo($body);
+              $openContainer.css({height:option.height,width:option.width});
           }
-
+          $top.appendTo($openContainer);
+          $body.appendTo($openContainer);
+          $openContainer.appendTo($('body'));
     }
 }
 window.layer = new Layer();
